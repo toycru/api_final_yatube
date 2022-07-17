@@ -25,6 +25,9 @@ class Post(models.Model):
         related_name="posts", blank=True, null=True
     )
 
+    # class Meta:
+    #    ordering = ['-pub_date']
+
     def __str__(self):
         return self.text
 
@@ -45,19 +48,16 @@ class Follow(models.Model):
         on_delete=models.CASCADE,
         related_name='follower',
     )
-    author = models.ForeignKey(
+    following = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='following',
     )
 
     class Meta:
-        ordering = ['author']
+        ordering = ['following']
         constraints = [
-            models.UniqueConstraint(fields=['user', 'author'], name='follow'),
-            # models.CheckConstraint(
-            #    name="author_not_user",
-            #    # check=~models.F('user')
-            #    check=models.Q(user__neq=models.F('author'))
-            # )
+            models.UniqueConstraint(
+                fields=['user', 'following'], name='follow'
+            ),
         ]
