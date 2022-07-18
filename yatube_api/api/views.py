@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from posts.models import Group, Post
-from rest_framework import filters, permissions, viewsets
+from rest_framework import filters, mixins, permissions, viewsets
 from rest_framework.pagination import LimitOffsetPagination
 
 from .permissions import IsAuthorOrReadOnly
@@ -27,8 +27,8 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     pagination_class = None
 
 
-class FollowViewSet(viewsets.ModelViewSet):
-    # queryset = Follow.objects.all()
+class FollowViewSet(mixins.ListModelMixin, mixins.CreateModelMixin,
+                    viewsets.GenericViewSet):
     serializer_class = FollowSerializer
     pagination_class = None
     filter_backends = (filters.SearchFilter,)

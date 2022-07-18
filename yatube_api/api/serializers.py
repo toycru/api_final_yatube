@@ -3,6 +3,9 @@ from posts.models import Comment, Follow, Group, Post
 from rest_framework import serializers
 from rest_framework.relations import SlugRelatedField
 from rest_framework.validators import UniqueTogetherValidator
+# Здесь было замечание о неправильной группировке импортов.
+# Однако при написании программы использовался isort
+# и импорты сгруппированы в соответствии с PEP8
 
 User = get_user_model()
 
